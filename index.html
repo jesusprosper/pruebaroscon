@@ -211,6 +211,10 @@
             const fechaPedido = new Date();
             const fechaPedidoFormateada = `${fechaPedido.getDate()}/${fechaPedido.getMonth() + 1}/${fechaPedido.getFullYear()}`;
 
+            // Formatear la fecha de entrega
+            const fechaEntregaObj = new Date(fechaEntrega);
+            const fechaEntregaFormateada = `${fechaEntregaObj.getDate()}/${fechaEntregaObj.getMonth() + 1}/${fechaEntregaObj.getFullYear()}`;
+
             let pedido = '';
             carrito.forEach(item => {
                 pedido += `${item}\n`;
@@ -223,8 +227,8 @@ Código Postal: ${codigoPostal}
 Pedido:\n${pedido}
 Teléfono: ${telefono}
 Email: ${email}
-Fecha de entrega: ${fechaEntrega}
-Fecha de realización del pedido: ${fechaPedidoFormateada}`;
+Fecha de entrega: **${fechaEntregaFormateada}**
+Fecha de realización del pedido: **${fechaPedidoFormateada}**`;
 
             const url = `https://wa.me/34628489272?text=${encodeURIComponent(mensaje)}`;
 
