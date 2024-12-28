@@ -128,7 +128,7 @@
         <label for="fecha_entrega">Fecha de Entrega:</label>
         <input type="date" id="fecha_entrega" name="fecha_entrega" required>
 
-        <button type="button" onclick="enviarWhatsApp()">Enviar Pedido por WhatsApp</button>
+        <button type="button" id="enviarWhatsapp" onclick="enviarWhatsApp()">Enviar Pedido por WhatsApp</button>
     </form>
 
     <script>
@@ -197,7 +197,7 @@
             });
         }
 
-        // Función para enviar el mensaje por WhatsApp
+        // Función para enviar el mensaje por WhatsApp usando window.open
         function enviarWhatsApp() {
             const nombre = document.getElementById('nombre').value;
             const calle = document.getElementById('calle').value;
@@ -205,10 +205,11 @@
             const codigoPostal = document.getElementById('codigo_postal').value;
             const telefono = document.getElementById('telefono').value;
             const email = document.getElementById('email').value;
-            const fechaEntrega = formatDate(document.getElementById('fecha_entrega').value);
+            const fechaEntrega = document.getElementById('fecha_entrega').value;
 
             // Obtener la fecha actual para la fecha de realización del pedido
-            const fechaPedido = formatDate(new Date());
+            const fechaPedido = new Date();
+            const fechaPedidoFormateada = `${fechaPedido.getDate()}/${fechaPedido.getMonth() + 1}/${fechaPedido.getFullYear()}`;
 
             let pedido = '';
             carrito.forEach(item => {
@@ -222,19 +223,13 @@ Código Postal: ${codigoPostal}
 Pedido:\n${pedido}
 Teléfono: ${telefono}
 Email: ${email}
-Fecha de entrega: *${fechaEntrega}*
-Fecha de realización del pedido: *${fechaPedido}*`;
+Fecha de entrega: ${fechaEntrega}
+Fecha de realización del pedido: ${fechaPedidoFormateada}`;
 
             const url = `https://wa.me/34628489272?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
-        }
 
-        // Función para formatear fecha a día/mes/año
-        function formatDate(date) {
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses en JS empiezan desde 0
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
+            // Usar window.open para abrir el enlace de WhatsApp
+            window.open(url, '_blank');
         }
     </script>
 </body>
