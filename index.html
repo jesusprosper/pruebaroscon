@@ -97,7 +97,7 @@
         </select>
 
         <label for="peso">Peso:</label>
-        <select id="peso" name="peso" disabled>
+        <select id="peso" name="peso">
             <option value="250">250 gramos</option>
             <option value="500">500 gramos</option>
             <option value="1">1 kg</option>
@@ -150,14 +150,15 @@
             document.getElementById('cantidad').value = cantidad;
         };
 
-        // Activar o desactivar el selector de peso dependiendo del producto
+        // El campo de peso solo se deshabilita cuando se selecciona "rosconcitos"
         document.getElementById('producto').onchange = function() {
-            const productoSeleccionado = this.value;
-            const pesoSelector = document.getElementById('peso');
+            const productoSeleccionado = document.getElementById('producto').value;
+            const pesoSeleccionado = document.getElementById('peso');
+
             if (productoSeleccionado === 'rosconcitos') {
-                pesoSelector.disabled = true;
+                pesoSeleccionado.disabled = true;
             } else {
-                pesoSelector.disabled = false;
+                pesoSeleccionado.disabled = false;
             }
         };
 
@@ -168,7 +169,12 @@
             const cantidadSeleccionada = document.getElementById('cantidad').value;
 
             if (cantidadSeleccionada > 0) {
-                let productoEnCarrito = `${productoSeleccionado}${pesoSeleccionado ? pesoSeleccionado : ''} ${cantidadSeleccionada}`;
+                let productoEnCarrito = '';
+                if (productoSeleccionado === 'rosconcitos') {
+                    productoEnCarrito = `rosconcitos ${cantidadSeleccionada}`;
+                } else {
+                    productoEnCarrito = `${productoSeleccionado}${pesoSeleccionado} ${cantidadSeleccionada}`;
+                }
                 carrito.push(productoEnCarrito);
                 actualizarCarrito();
                 // Reiniciar cantidad a 0 después de añadir
