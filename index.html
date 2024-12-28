@@ -206,7 +206,9 @@
             const telefono = document.getElementById('telefono').value;
             const email = document.getElementById('email').value;
             const fechaEntrega = formatDate(document.getElementById('fecha_entrega').value);
-            const fechaPedido = formatDate(new Date().toLocaleDateString());
+
+            // Obtener la fecha actual para la fecha de realización del pedido
+            const fechaPedido = formatDate(new Date());
 
             let pedido = '';
             carrito.forEach(item => {
@@ -228,8 +230,7 @@ Fecha de realización del pedido: *${fechaPedido}*`;
         }
 
         // Función para formatear fecha a día/mes/año
-        function formatDate(dateString) {
-            const date = new Date(dateString);
+        function formatDate(date) {
             const day = String(date.getDate()).padStart(2, '0');
             const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses en JS empiezan desde 0
             const year = date.getFullYear();
