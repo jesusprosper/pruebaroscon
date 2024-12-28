@@ -205,8 +205,8 @@
             const codigoPostal = document.getElementById('codigo_postal').value;
             const telefono = document.getElementById('telefono').value;
             const email = document.getElementById('email').value;
-            const fechaEntrega = document.getElementById('fecha_entrega').value;
-            const fechaPedido = new Date().toLocaleDateString();
+            const fechaEntrega = formatDate(document.getElementById('fecha_entrega').value);
+            const fechaPedido = formatDate(new Date().toLocaleDateString());
 
             let pedido = '';
             carrito.forEach(item => {
@@ -220,11 +220,20 @@ Código Postal: ${codigoPostal}
 Pedido:\n${pedido}
 Teléfono: ${telefono}
 Email: ${email}
-Fecha de entrega: ${fechaEntrega}
-Fecha de realización del pedido: ${fechaPedido}`;
+Fecha de entrega: *${fechaEntrega}*
+Fecha de realización del pedido: *${fechaPedido}*`;
 
             const url = `https://wa.me/34628489272?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
+        }
+
+        // Función para formatear fecha a día/mes/año
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses en JS empiezan desde 0
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
         }
     </script>
 </body>
